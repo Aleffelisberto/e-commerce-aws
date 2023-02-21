@@ -4,7 +4,7 @@ import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 
 export class ProductsAppStack extends cdk.Stack {
-  private readonly productsFetchHandler: lambdaNodeJS.NodejsFunction;
+  public readonly productsFetchHandler: lambdaNodeJS.NodejsFunction;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
