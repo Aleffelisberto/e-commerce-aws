@@ -22,4 +22,9 @@ export class ProductRepository {
     const data = await this.ddbClient.scan({ TableName: this.productsDdb }).promise();
     return data.Items as Product[];
   }
+
+  async findById(id: string): Promise<Product | undefined> {
+    const data = await this.ddbClient.get({ TableName: this.productsDdb, Key: { id } }).promise();
+    return (data.Item as Product) || undefined;
+  }
 }
