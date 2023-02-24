@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { ProductsAppLayersStack } from "./../lib/productsAppLayers-stack";
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
 import { ProductsAppStack } from "../lib/productsApp-stack";
@@ -16,15 +17,15 @@ const tags = {
   team: "Alefsandler",
 };
 
-const productsApiStack = new ProductsAppStack(app, "ProductsApp", {
-  tags,
-  env,
-});
+const productsAppLayersStack = new ProductsAppLayersStack(app, "ProductsAppLayers", { tags, env });
+
+const productsAppStack = new ProductsAppStack(app, "ProductsApp", { tags, env });
+productsAppStack.addDependency(productsAppLayersStack);
 
 const eCommerceApiStack = new ECommerceApiStack(app, "ECommerceApi", {
-  productsFetchHandler: productsApiStack.productsFetchHandler,
-  productsAdminHandler: productsApiStack.productsAdminHandler,
+  productsFetchHandler: productsAppStack.productsFetchHandler,
+  productsAdminHandler: productsAppStack.productsAdminHandler,
   tags,
   env,
 });
-eCommerceApiStack.addDependency(productsApiStack);
+eCommerceApiStack.addDependency(productsAppStack);
