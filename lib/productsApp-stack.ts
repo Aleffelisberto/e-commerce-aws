@@ -17,7 +17,7 @@ export class ProductsAppStack extends cdk.Stack {
       tableName: "products",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       partitionKey: {
-        name: id,
+        name: "id",
         type: dynamodb.AttributeType.STRING,
       },
       billingMode: dynamodb.BillingMode.PROVISIONED,
