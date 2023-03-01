@@ -36,9 +36,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context): Pr
         const productUpdated = await productRepository.update(id, productData);
         return {
           statusCode: 200,
-          body: JSON.stringify({
-            message: JSON.stringify(productUpdated),
-          }),
+          body: JSON.stringify(productUpdated),
         };
       } catch (err: any) {
         const message = err.message;
