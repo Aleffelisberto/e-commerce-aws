@@ -54,25 +54,21 @@ export class ProductRepository {
   }
 
   async update(id: string, product: ProductUpdate): Promise<Product | Error> {
-    try {
-      const data = await this.ddbClient
-        .update({
-          TableName: this.productsDdb,
-          Key: { id },
-          ConditionExpression: "attribute_exists(id)",
-          ReturnValues: "UPDATED_NEW",
-          UpdateExpression: "set productName = :n, code = :c, price = :p, model = :m",
-          ExpressionAttributeValues: {
-            ":n": product.productName,
-            ":c": product.code,
-            ":p": product.price,
-            ":m": product.model,
-          },
-        })
-        .promise();
-      return { ...data.Attributes, id } as Product;
-    } catch (err: unknown) {
-      return err as Error;
-    }
+    const data = await this.ddbClient
+      .update({
+        TableName: this.productsDdb,
+        Key: { id },
+        ConditionExpression: "attribute_exists(id)",
+        ReturnValues: "UPDATED_NEW",
+        UpdateExpression: "set productName = :n, code = :c, price = :p, model = :m",
+        ExpressionAttributeValues: {
+          ":n": product.productName,
+          ":c": product.code,
+          ":p": product.price,
+          ":m": product.model,
+        },
+      })
+      .promise();
+    return { ...data.Attributes, id } as Product;
   }
 }
