@@ -14,7 +14,7 @@ export class ProductsAppStack extends cdk.Stack {
     super(scope, id, props);
 
     this.productsDdb = new dynamodb.Table(this, "ProductsDdb", {
-      tableName: "products",
+      tableName: "product",
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       partitionKey: {
         name: "id",
